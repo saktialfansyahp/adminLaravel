@@ -15,8 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
+                    {{-- <x-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
                         {{ __('Contacts') }}
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                        {{ __('Data Ebook') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dataUser')" :active="request()->routeIs('dataUser')">
+                        {{ __('Data User') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -103,3 +109,4 @@
         </div>
     </div>
 </nav>
+

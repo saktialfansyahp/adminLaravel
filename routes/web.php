@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UserEbookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('dataUser', [UserEbookController::class, 'index'])->middleware(['auth'])->name('dataUser');
+
 require __DIR__.'/auth.php';
 
 Route::resource('contacts', ContactController::class)->middleware(['auth']);
+
+Route::resource('posts', PostController::class)->middleware(['auth']);
+
