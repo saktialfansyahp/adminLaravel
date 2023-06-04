@@ -75,8 +75,16 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
+            {{-- <x-responsive-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
                 {{ __('Contacts') }}
+            </x-responsive-nav-link> --}}
+
+            <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                {{ __('Data Ebook') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('dataUser')" :active="request()->routeIs('dataUser')">
+                {{ __('Data User') }}
             </x-responsive-nav-link>
         </div>
         <!-- Responsive Settings Options -->

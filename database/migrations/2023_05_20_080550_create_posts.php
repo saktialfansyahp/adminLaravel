@@ -21,6 +21,8 @@ class CreatePosts extends Migration
             $table->enum('kategori_1',['rekomendasi','terbaru','populer','terlaris','gratis']);
             $table->enum('kategori_2',['beauty','healt','social science','religion & spirituality','education & teaching','entertainment','parenting & family']);
             $table->double('rating');
+            $table->text('jenis', ['biasa','premium']);
+            $table->text('penulis');
             $table->text('deskripsi');
             $table->string('isi');
             $table->timestamps();

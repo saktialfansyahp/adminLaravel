@@ -16,6 +16,8 @@ class Post extends Model
         'kategori_1',
         'kategori_2',
         'rating',
+        'jenis',
+        'penulis',
         'deskripsi',
         'isi',
     ];

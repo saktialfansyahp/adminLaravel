@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AuthApiController extends Controller
@@ -70,5 +73,17 @@ class AuthApiController extends Controller
         }
 
         return response()->json(['message' => 'Logged out successfully']);
+    }
+
+    public function dataEbook(){
+        $posts = Post::all();
+
+        $posts->transform(function ($post) {
+            $post->image_url = Storage::url($post->cover); // Menambahkan URL gambar ke dalam model Post
+            $post->pdf_url = Storage::url($post->isi); // Menambahkan URL gambar ke dalam model Post
+            return $post;
+            Log::info($post->image_url);
+        });
+        return response()->json($posts)->header('Access-Control-Allow-Origin', '*');
     }
 }

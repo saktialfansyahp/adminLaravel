@@ -25,6 +25,16 @@ Route::group([
 ], function(){
     Route::post('register', [AuthApiController::class, 'register']);
     Route::post('login', [AuthApiController::class, 'login']);
+    // Route::get('dataEbook', [AuthApiController::class, 'dataEbook']);
+    Route::get('dataEbook', [AuthApiController::class, 'dataEbook'], function () {
+        $response = new Response();
+
+        // Tambahkan header sesuai kebutuhan
+        $response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Content-Type', '*');
+
+        return $response;
+    });
     Route::group([
         'middleware' => 'auth:api'
     ], function(){

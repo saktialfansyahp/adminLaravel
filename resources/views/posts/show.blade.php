@@ -38,6 +38,14 @@
                             <td>{{ $post->rating }}</td>
                         </tr>
                         <tr>
+                            <td class="px-4 py-2 font-bold">Jenis</td>
+                            <td>{{ $post->jenis }}</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 font-bold">Penulis</td>
+                            <td>{{ $post->penulis }}</td>
+                        </tr>
+                        <tr>
                             <td class="px-4 py-2 font-bold">Deskripsi</td>
                             <td>{{ $post->deskripsi }}</td>
                         </tr>

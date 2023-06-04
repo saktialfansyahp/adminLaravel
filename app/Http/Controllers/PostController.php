@@ -40,32 +40,27 @@ class PostController extends Controller
     {
         $request->validate([
             'judul' => 'required',
-            'cover' => 'required',
+            'cover' => 'required|image',
             'terbit' => 'required',
             'kategori_1' => 'required',
             'kategori_2' => 'required',
             'rating' => 'required|numeric',
+            'jenis' => 'required',
+            'penulis' => 'required',
             'deskripsi' => 'required',
-            'isi' => 'required',
+            'isi' => 'required|mimes:pdf|max:20000',
         ]);
 
         $posts = new Post;
-        $name = "cover";
 
-        $path = Storage::putFile('public', $request->file('cover'), $name);
-        $posts->cover = $path;
-        // if($request->hasFile('cover')){
+        if ($request->hasFile('cover')) {
+            $path = Storage::putFile('public', $request->file('cover'));
+            $posts->cover = $path;
+        }
 
-        //     // $path = $request->file('cover')->store('public/image');
-        // }
-
-        if($request->hasFile('isi')){
-            $request->validate([
-                'isi' => 'required|mimes:pdf|max:20000',
-            ]);
-
-            $path2 = $request->file('file')->store('public/files');
-            $post->file = $path2;
+        if ($request->hasFile('isi')) {
+            $path2 = Storage::putFile('public', $request->file('isi'));
+            $posts->isi = $path2;
         }
 
         $posts->judul = $request->judul;
@@ -73,13 +68,13 @@ class PostController extends Controller
         $posts->kategori_1 = $request->kategori_1;
         $posts->kategori_2 = $request->kategori_2;
         $posts->rating = $request->rating;
+        $posts->jenis = $request->jenis;
+        $posts->penulis = $request->penulis;
         $posts->deskripsi = $request->deskripsi;
-        $posts->cover = $request->cover;
-        $posts->isi = $request->isi;
 
         $posts->save();
 
-        return redirect()->route('posts.index')->with('success','created successfully.');
+        return redirect()->route('posts.index')->with('success', 'Berhasil dibuat.');
     }
 
     /**
@@ -119,27 +114,38 @@ class PostController extends Controller
             'kategori_1' => 'required',
             'kategori_2' => 'required',
             'rating' => 'required',
+            'jenis' => 'required',
+            'penulis' => 'required',
             'deskripsi' => 'required',
         ]);
 
         $post = Post::find($id);
 
-        if($request->hasFile('cover')){
+        if ($request->hasFile('cover')) {
             $request->validate([
-                'cover' => 'required|image|mimes:jpg,png,svg|max:2048',
+                'cover' => 'image|mimes:jpg,png,svg|max:2048',
             ]);
 
-            $path = $request->file('image')->store('public/image');
+            // Hapus gambar lama jika ada
+            if ($post->cover) {
+                Storage::delete($post->cover);
+            }
+            $path = Storage::putFile('public', $request->file('cover'));
             $post->cover = $path;
         }
 
-        if($request->hasFile('isi')){
+        if ($request->hasFile('isi')) {
             $request->validate([
                 'isi' => 'required|mimes:pdf|max:20000',
             ]);
 
-            $path2 = $request->file('file')->store('public/files');
-            $post->file = $path2;
+            // Hapus file isi lama jika ada
+            if ($post->isi) {
+                Storage::delete($post->isi);
+            }
+
+            $path2 = Storage::putFile('public/files', $request->file('isi'));
+            $post->isi = $path2;
         }
 
         $post->judul = $request->judul;
@@ -147,10 +153,12 @@ class PostController extends Controller
         $post->kategori_1 = $request->kategori_1;
         $post->kategori_2 = $request->kategori_2;
         $post->rating = $request->rating;
+        $post->jenis = $request->jenis;
+        $post->penulis = $request->penulis;
         $post->deskripsi = $request->deskripsi;
-        $post->save();
 
-        return Redirect::route('posts.index');
+        $post->save();
+        return redirect()->route('posts.index');
     }
 
     /**
