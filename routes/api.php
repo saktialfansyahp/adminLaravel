@@ -25,7 +25,11 @@ Route::group([
 ], function(){
     Route::post('register', [AuthApiController::class, 'register']);
     Route::post('login', [AuthApiController::class, 'login']);
+    Route::get('dataUser', [AuthApiController::class, 'dataUser']);
     // Route::get('dataEbook', [AuthApiController::class, 'dataEbook']);
+    Route::post('createWishlist', [AuthApiController::class, 'createWishlist']);
+    Route::get('wishlist/{id}', [AuthApiController::class, 'getWishById']);
+    Route::post('deletewishlist', [AuthApiController::class, 'destroy']);
     Route::get('dataEbook', [AuthApiController::class, 'dataEbook'], function () {
         $response = new Response();
 

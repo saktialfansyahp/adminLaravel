@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -75,6 +76,12 @@ class AuthApiController extends Controller
         return response()->json(['message' => 'Logged out successfully']);
     }
 
+    public function dataUser(){
+        $users = User::all();
+
+        return response()->json($users);
+    }
+
     public function dataEbook(){
         $posts = Post::all();
 
@@ -85,5 +92,38 @@ class AuthApiController extends Controller
             Log::info($post->image_url);
         });
         return response()->json($posts)->header('Access-Control-Allow-Origin', '*');
+    }
+
+    public function createWishlist(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|string|max:255',
+            'post_id' => 'required|string',
+        ]);
+
+        // Return an error response if the validation fails
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Create a new user record
+        $user = Wishlist::create([
+            'user_id' => $request->user_id,
+            'post_id' => $request->post_id,
+        ]);
+
+        return response()->json($user);
+    }
+
+    public function getWishById($id){
+        $data = Wishlist::with('user','post')->where('user_id', $id)->get();
+        // $data = ;
+        return response()->json($data);
+    }
+
+    public function destroy(Request $request){
+        $data = Wishlist::where('user_id', $request->user_id)->where('post_id', $request->post_id)->first();
+        $data->delete();
+        // $data = ;
+        return response()->json($data);
     }
 }

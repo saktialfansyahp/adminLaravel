@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Wishlist;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -21,4 +22,8 @@ class Post extends Model
         'deskripsi',
         'isi',
     ];
+
+    public function wishlist(){
+        return $this->hasMany(Wishlist::class);
+    }
 }
