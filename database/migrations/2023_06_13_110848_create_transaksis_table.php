@@ -15,6 +15,12 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('address');
+            $table->string('phone');
+            $table->integer('qty');
+            $table->bigInteger('total_price');
+            $table->enum('status', ['Unpaid', 'Paid']);
             $table->timestamps();
         });
     }

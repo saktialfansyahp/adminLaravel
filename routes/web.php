@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserEbookController;
 
 /*
@@ -31,4 +32,8 @@ require __DIR__.'/auth.php';
 Route::resource('contacts', ContactController::class)->middleware(['auth']);
 
 Route::resource('posts', PostController::class)->middleware(['auth']);
+
+Route::resource('transaksi', TransaksiController::class)->middleware(['auth']);
+// Route::post('/checkout', TransaksiController::class, 'store')->middleware(['auth']);
+// Route::get('/transaksi', TransaksiController::class, 'index')->middleware(['auth']);
 

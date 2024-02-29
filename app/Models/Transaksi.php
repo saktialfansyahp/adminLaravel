@@ -8,9 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Transaksi extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'harga',
-        '',
-    ];
+    protected $guarded = [];
 }
